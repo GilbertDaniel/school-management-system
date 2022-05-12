@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\Setup\StudentClassController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,12 +34,19 @@ Route::get('admin/logout', [AdminController::class, 'Logout'])->name('admin.logo
 
 
 // User Management All Routes
-
-
 Route::prefix('users')->group(function(){
     Route::get('/view', [UserController::class, 'UserView'])->name('users.view');
     Route::get('/create', [UserController::class, 'UserCreate'])->name('users.create');
     Route::post('/store', [UserController::class, 'UserStore'])->name('users.store');
     Route::get('/edit/{id}', [UserController::class, 'UserEdit'])->name('users.edit');
     Route::post('/update/{id}', [UserController::class, 'UserUpdate'])->name('users.update');
+});
+// Student Class Management All Routes
+Route::prefix('setups')->group(function(){
+    Route::get('student/class/view', [StudentClassController::class, 'ViewStudent'])->name('student.class.view');
+    Route::get('student/class/create', [StudentClassController::class, 'StudentClassCreate'])->name('student.class.create');
+    Route::post('student/class/store', [StudentClassController::class, 'StudentClassStore'])->name('student.class.store');
+    Route::get('student/class/edit/{id}', [StudentClassController::class, 'StudentClassEdit'])->name('student.class.edit');
+    Route::post('student/class/update/{id}', [StudentClassController::class, 'StudentClassUpdate'])->name('student.class.update');
+    Route::get('student/class/delete/{id}', [StudentClassController::class, 'StudentClassDelete'])->name('student.class.delete');
 });
