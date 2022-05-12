@@ -1,5 +1,6 @@
 @php
  $prefix = Request::route()->getPrefix();
+ $route = Route::current()->getName();
 @endphp
 <aside class="main-sidebar">
     <!-- sidebar-->
@@ -7,7 +8,7 @@
 
         <div class="user-profile">
             <div class="ulogo">
-                <a href="index.html">
+                <a href="{{ route('dashboard') }}">
                     <!-- logo for regular state and mobile devices -->
                     <div class="d-flex align-items-center justify-content-center">
                         <img src="{{ asset('backend/images/logo-dark.png') }}" alt="">
@@ -20,28 +21,28 @@
         <!-- sidebar menu-->
         <ul class="sidebar-menu" data-widget="tree">
 
-            <li>
-                <a href="index.html">
+            <li class="{{ ($route == 'dashboard')?'active':'' }}">
+                <a href="{{ route('dashboard') }}">
                     <i data-feather="pie-chart"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
-            <li class="treeview">
+            <li class="treeview {{ ($prefix == '/users')?'active':'' }} " >
                 <a href="#">
-                    <i data-feather="message-circle"></i>
-                    <span>Manage User</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-right pull-right"></i>
-                    </span>
+                  <i data-feather="message-circle"></i>
+                  <span>Manage User</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-right pull-right"></i>
+                  </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{route('users.view')}}"><i class="ti-more"></i>View User</a></li>
-                    <li><a href="{{route('users.create')}}"><i class="ti-more"></i>Add User</a></li>
+                  <li><a href="{{ route('users.view') }}"><i class="ti-more"></i>View User</a></li>
+                  <li><a href="{{ route('users.create') }}"><i class="ti-more"></i>Add User</a></li>
                 </ul>
-            </li>
+              </li>
 
-            <li class="treeview" {{($prefix == '/setups')?'active':''}}>
+            <li class="treeview {{ ($prefix == '/setups')?'active':'' }}">
                 <a href="#">
                     <i data-feather="mail"></i> <span>Setup Management</span>
                     <span class="pull-right-container">
@@ -51,7 +52,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{route('student.class.view')}}"><i class="ti-more"></i>Student Class</a></li>
                     <li><a href="{{route('student.year.view')}}"><i class="ti-more"></i>Student Year</a></li>
-                    <li><a href="mailbox_read_mail.html"><i class="ti-more"></i>Read</a></li>
+                    <li><a href="{{route('student.group.view')}}"><i class="ti-more"></i>Student Group</a></li>
                 </ul>
             </li>
 

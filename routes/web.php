@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\Setup\StudentClassController;
+use App\Http\Controllers\Backend\Setup\StudentGroupController;
 use App\Http\Controllers\Backend\Setup\StudentYearController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,7 @@ Route::prefix('users')->group(function(){
     Route::post('/store', [UserController::class, 'UserStore'])->name('users.store');
     Route::get('/edit/{id}', [UserController::class, 'UserEdit'])->name('users.edit');
     Route::post('/update/{id}', [UserController::class, 'UserUpdate'])->name('users.update');
+    Route::get('/delete/{id}', [UserController::class, 'UserDelete'])->name('users.delete');
 });
 // Setups Class Management All Routes
 Route::prefix('setups')->group(function(){
@@ -60,4 +62,27 @@ Route::prefix('setups')->group(function(){
     Route::get('student/year/edit/{id}', [StudentYearController::class, 'StudentYearEdit'])->name('student.year.edit');
     Route::post('student/year/update/{id}', [StudentYearController::class, 'StudentYearUpdate'])->name('student.year.update');
     Route::get('student/year/delete/{id}', [StudentYearController::class, 'StudentYearDelete'])->name('student.year.delete');
+
+
+    // Student Group Management All Routes
+    // Route::resource('student/group/', StudentGroupController::class, [
+    //     'names' => [
+    //         'index' => 'student.group.view',
+    //         'create' => 'student.group.create',
+    //         'store' => 'student.group.store',
+    //         'edit' => 'student.group.edit',
+    //         'update' => 'student.group.update',
+    //         'destroy' => 'student.group.delete',
+    //     ]
+    // ]);
+
+
+    Route::get('student/group/view', [StudentGroupController::class, 'index'])->name('student.group.view');
+    Route::get('student/group/create', [StudentGroupController::class, 'create'])->name('student.group.create');
+    Route::post('student/group/store', [StudentGroupController::class, 'store'])->name('student.group.store');
+    Route::get('student/group/edit/{id}', [StudentGroupController::class, 'edit'])->name('student.group.edit');
+    Route::post('student/group/update/{id}', [StudentGroupController::class, 'update'])->name('student.group.update');
+    Route::get('student/group/delete/{id}', [StudentGroupController::class, 'destroy'])->name('student.group.delete');
+
+
 });
