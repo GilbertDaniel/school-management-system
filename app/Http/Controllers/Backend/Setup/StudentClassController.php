@@ -35,7 +35,7 @@ class StudentClassController extends Controller
             'alert-type' => 'success',
         );
 
-        return redirect()->route('backend.setup.student_class.index')->with($notification);
+        return redirect()->route('student.class.view')->with($notification);
 
     }
 
