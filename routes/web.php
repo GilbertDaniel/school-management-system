@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Setup\StudentGroupController;
 use App\Http\Controllers\Backend\Setup\StudentShiftController;
 use App\Http\Controllers\Backend\Setup\StudentYearController;
 use App\Http\Controllers\Backend\Setup\AssignSubjectController;
+use App\Http\Controllers\Backend\Setup\DesignationController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -134,7 +135,7 @@ Route::prefix('setups')->group(function(){
     Route::post('school/subject/update/{id}', [SchoolSubjectController::class, 'update'])->name('school.subject.update');
     Route::get('school/subject/delete/{id}', [SchoolSubjectController::class, 'destroy'])->name('school.subject.delete');
 
-
+    // Assign Subject Management All Routes
     Route::get('assign/subject/view', [AssignSubjectController::class, 'index'])->name('assign.subject.view');
     Route::get('assign/subject/show/{id}', [AssignSubjectController::class, 'show'])->name('assign.subject.show');
     Route::get('assign/subject/create', [AssignSubjectController::class, 'create'])->name('assign.subject.create');
@@ -143,5 +144,11 @@ Route::prefix('setups')->group(function(){
     Route::post('assign/subject/update/{id}', [AssignSubjectController::class, 'update'])->name('assign.subject.update');
     Route::get('assign/subject/delete/{id}', [AssignSubjectController::class, 'destroy'])->name('assign.subject.delete');
 
+    Route::get('designation/view', [DesignationController::class, 'index'])->name('designation.view');
+    Route::get('designation/create', [DesignationController::class, 'create'])->name('designation.create');
+    Route::post('designation/store', [DesignationController::class, 'store'])->name('designation.store');
+    Route::get('designation/edit/{id}', [DesignationController::class, 'edit'])->name('designation.edit');
+    Route::post('designation/update/{id}', [DesignationController::class, 'update'])->name('designation.update');
+    Route::get('designation/delete/{id}', [DesignationController::class, 'destroy'])->name('designation.delete');
 
 });
