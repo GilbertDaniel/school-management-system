@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\Setup\ExamTypeController;
 use App\Http\Controllers\Backend\Setup\FeeCategoryAmoutController;
 use App\Http\Controllers\Backend\Setup\FeeCategoryController;
 use App\Http\Controllers\Backend\Setup\StudentClassController;
@@ -114,6 +115,13 @@ Route::prefix('setups')->group(function(){
     Route::get('fee/amount/edit/{id}', [FeeCategoryAmoutController::class, 'edit'])->name('fee.amount.edit');
     Route::post('fee/amount/update/{id}', [FeeCategoryAmoutController::class, 'update'])->name('fee.amount.update');
     Route::get('fee/amount/delete/{id}', [FeeCategoryAmoutController::class, 'destroy'])->name('fee.amount.delete');
+
+    Route::get('exam/type/view', [ExamTypeController::class, 'index'])->name('exam.type.view');
+    Route::get('exam/type/create', [ExamTypeController::class, 'create'])->name('exam.type.create');
+    Route::post('exam/type/store', [ExamTypeController::class, 'store'])->name('exam.type.store');
+    Route::get('exam/type/edit/{id}', [ExamTypeController::class, 'edit'])->name('exam.type.edit');
+    Route::post('exam/type/update/{id}', [ExamTypeController::class, 'update'])->name('exam.type.update');
+    Route::get('exam/type/delete/{id}', [ExamTypeController::class, 'destroy'])->name('exam.type.delete');
 
 
 });
