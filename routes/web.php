@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\Setup\ExamTypeController;
 use App\Http\Controllers\Backend\Setup\FeeCategoryAmoutController;
 use App\Http\Controllers\Backend\Setup\FeeCategoryController;
+use App\Http\Controllers\Backend\Setup\SchoolSubjectController;
 use App\Http\Controllers\Backend\Setup\StudentClassController;
 use App\Http\Controllers\Backend\Setup\StudentGroupController;
 use App\Http\Controllers\Backend\Setup\StudentShiftController;
@@ -116,12 +117,21 @@ Route::prefix('setups')->group(function(){
     Route::post('fee/amount/update/{id}', [FeeCategoryAmoutController::class, 'update'])->name('fee.amount.update');
     Route::get('fee/amount/delete/{id}', [FeeCategoryAmoutController::class, 'destroy'])->name('fee.amount.delete');
 
+    // Exam Route Management All Routes
     Route::get('exam/type/view', [ExamTypeController::class, 'index'])->name('exam.type.view');
     Route::get('exam/type/create', [ExamTypeController::class, 'create'])->name('exam.type.create');
     Route::post('exam/type/store', [ExamTypeController::class, 'store'])->name('exam.type.store');
     Route::get('exam/type/edit/{id}', [ExamTypeController::class, 'edit'])->name('exam.type.edit');
     Route::post('exam/type/update/{id}', [ExamTypeController::class, 'update'])->name('exam.type.update');
     Route::get('exam/type/delete/{id}', [ExamTypeController::class, 'destroy'])->name('exam.type.delete');
+
+    // School Subject Management All Routes
+    Route::get('school/subject/view', [SchoolSubjectController::class, 'index'])->name('school.subject.view');
+    Route::get('school/subject/create', [SchoolSubjectController::class, 'create'])->name('school.subject.create');
+    Route::post('school/subject/store', [SchoolSubjectController::class, 'store'])->name('school.subject.store');
+    Route::get('school/subject/edit/{id}', [SchoolSubjectController::class, 'edit'])->name('school.subject.edit');
+    Route::post('school/subject/update/{id}', [SchoolSubjectController::class, 'update'])->name('school.subject.update');
+    Route::get('school/subject/delete/{id}', [SchoolSubjectController::class, 'destroy'])->name('school.subject.delete');
 
 
 });
