@@ -73,6 +73,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{route('student.admission.view')}}"><i class="ti-more"></i>Student Admission</a></li>
+                    <li><a href="{{ route('roll.generate.view') }}"><i class="ti-more"></i>Roll Generate</a></li>
                 </ul>
             </li>
 

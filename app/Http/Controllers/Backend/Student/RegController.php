@@ -122,7 +122,6 @@ class RegController extends Controller
             $assign_student = new Student();
             $assign_student->student_id = $user->id;
             $assign_student->year_id = $request->year_id;
-            $assign_student->roll = $user->id_no;
             $assign_student->class_id = $request->class_id;
             $assign_student->group_id = $request->group_id;
             $assign_student->shift_id = $request->shift_id;

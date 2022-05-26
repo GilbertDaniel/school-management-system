@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\Setup\StudentYearController;
 use App\Http\Controllers\Backend\Setup\AssignSubjectController;
 use App\Http\Controllers\Backend\Setup\DesignationController;
 use App\Http\Controllers\Backend\Student\RegController;
+use App\Http\Controllers\Backend\Student\StudentRollController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -165,6 +166,12 @@ Route::prefix('students')->group(function(){
     Route::post('/admission/update/{id}', [RegController::class, 'update'])->name('student.admission.update');
     Route::get('/admission/filter', [RegController::class, 'StudentWiseFilter'])->name('student.admission.filter');
     Route::get('/admission/show/{id}', [RegController::class, 'show'])->name('student.admission.show');
+
+
+    Route::get('/roll/generate/view', [StudentRollController::class, 'StudentRollView'])->name('roll.generate.view');
+    Route::get('/reg/getstudents', [StudentRollController::class, 'GetStudents'])->name('student.registration.getstudents');
+    Route::post('/roll/generate/store', [StudentRollController::class, 'StudentRollStore'])->name('roll.generate.store');
+
 
 
 });
