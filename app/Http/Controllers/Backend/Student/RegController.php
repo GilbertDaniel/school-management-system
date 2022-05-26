@@ -32,6 +32,20 @@ class RegController extends Controller
         return view('backend.student.admission.index', $data);
     }
 
+
+
+    public function StudentWiseFilter(Request $request){
+    	$data['years'] = StudentYear::all();
+    	$data['classes'] = StudentClass::all();
+
+    	$data['year_id'] = $request->year_id;
+    	$data['class_id'] = $request->class_id;
+
+    	$data['allData'] = Student::where('year_id',$request->year_id)->where('class_id',$request->class_id)->get();
+    	return view('backend.student.admission.index',$data);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -14,7 +14,7 @@
                                 <h4 class="box-title">Student <strong>Search</strong></h4>
                             </div>
                             <div class="box-body">
-                                <form method="GET" action="#">
+                                <form method="GET" action="{{route('student.admission.filter')}}">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -104,9 +104,9 @@
                                                                 href="{{ route('student.admission.edit', $value->student_id) }}"
                                                                 class="btn btn-info"> <i class="fa fa-edit"></i> </a>
 
-                                                            <a title="Promotion"
+                                                            {{-- <a title="Promotion"
                                                                 href="{{ route('student.admission.edit', $value->student_id) }}"
-                                                                class="btn btn-primary"><i class="fa fa-check"></i></a>
+                                                                class="btn btn-primary"><i class="fa fa-check"></i></a> --}}
 
                                                             <a target="_blank" title="Details"
                                                                 href="{{ route('student.admission.edit', $value->student_id) }}"
@@ -155,9 +155,9 @@
                                                                 href="{{ route('student.admission.edit', $value->student_id) }}"
                                                                 class="btn btn-info"> <i class="fa fa-edit"></i> </a>
 
-                                                            <a title="Promotion"
+                                                            {{-- <a title="Promotion"
                                                                 href="{{ route('student.admission.edit', $value->student_id) }}"
-                                                                class="btn btn-primary"><i class="fa fa-check"></i></a>
+                                                                class="btn btn-primary"><i class="fa fa-check"></i></a> --}}
 
                                                             <a target="_blank" title="Details"
                                                                 href="{{ route('student.admission.edit', $value->student_id) }}"

@@ -163,5 +163,6 @@ Route::prefix('students')->group(function(){
     Route::post('/admission/store', [RegController::class, 'store'])->name('student.admission.store');
     Route::get('/admission/edit/{id}', [RegController::class, 'edit'])->name('student.admission.edit');
     Route::post('/admission/update/{id}', [RegController::class, 'update'])->name('student.admission.update');
+    Route::get('/admission/filter', [RegController::class, 'StudentWiseFilter'])->name('student.admission.filter');
 
 });
