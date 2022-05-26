@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Backend\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\DiscountStudent;
 use App\Models\Student;
 use App\Models\StudentClass;
 use App\Models\StudentGroup;
 use App\Models\StudentShift;
 use App\Models\StudentYear;
-use DB;
-use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\DiscountStudent;
+use DB;
+use PDF;
+use Illuminate\Http\Request;
 
 class RegController extends Controller
 {
@@ -32,17 +33,16 @@ class RegController extends Controller
         return view('backend.student.admission.index', $data);
     }
 
+    public function StudentWiseFilter(Request $request)
+    {
+        $data['years'] = StudentYear::all();
+        $data['classes'] = StudentClass::all();
 
+        $data['year_id'] = $request->year_id;
+        $data['class_id'] = $request->class_id;
 
-    public function StudentWiseFilter(Request $request){
-    	$data['years'] = StudentYear::all();
-    	$data['classes'] = StudentClass::all();
-
-    	$data['year_id'] = $request->year_id;
-    	$data['class_id'] = $request->class_id;
-
-    	$data['allData'] = Student::where('year_id',$request->year_id)->where('class_id',$request->class_id)->get();
-    	return view('backend.student.admission.index',$data);
+        $data['allData'] = Student::where('year_id', $request->year_id)->where('class_id', $request->class_id)->get();
+        return view('backend.student.admission.index', $data);
 
     }
 
@@ -152,7 +152,12 @@ class RegController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['details'] = Student::with(['student', 'discount'])->where('student_id', $id)->first();
+        // dd($data['details']['student']['name']);
+        $file_name = $data['details']['student']['name'].'pdf';
+        $pdf = PDF::loadView('backend.student.admission.student_details_pdf', $data);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream($file_name);
     }
 
     /**
@@ -164,13 +169,13 @@ class RegController extends Controller
     public function edit($id)
     {
         $data['years'] = StudentYear::all();
-    	$data['classes'] = StudentClass::all();
-    	$data['groups'] = StudentGroup::all();
-    	$data['shifts'] = StudentShift::all();
+        $data['classes'] = StudentClass::all();
+        $data['groups'] = StudentGroup::all();
+        $data['shifts'] = StudentShift::all();
 
-    	$data['editData'] = Student::with(['student','discount'])->where('student_id',$id)->first();
-    	// dd($data['editData']->toArray());
-    	return view('backend.student.admission.edit',$data);
+        $data['editData'] = Student::with(['student', 'discount'])->where('student_id', $id)->first();
+        // dd($data['editData']->toArray());
+        return view('backend.student.admission.edit', $data);
     }
 
     /**
@@ -182,11 +187,9 @@ class RegController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::transaction(function() use($request,$id){
+        DB::transaction(function () use ($request, $id) {
 
-
-
-            $user = User::where('id',$id)->first();
+            $user = User::where('id', $id)->first();
             $user->name = $request->name;
             $user->fname = $request->fname;
             $user->mname = $request->mname;
@@ -194,39 +197,38 @@ class RegController extends Controller
             $user->address = $request->address;
             $user->gender = $request->gender;
             $user->religion = $request->religion;
-            $user->dob = date('Y-m-d',strtotime($request->dob));
+            $user->dob = date('Y-m-d', strtotime($request->dob));
 
             if ($request->file('image')) {
                 $file = $request->file('image');
-                @unlink(public_path('upload/student_images/'.$user->image));
-                $filename = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('upload/student_images'),$filename);
+                @unlink(public_path('upload/student_images/' . $user->image));
+                $filename = date('YmdHi') . $file->getClientOriginalName();
+                $file->move(public_path('upload/student_images'), $filename);
                 $user['image'] = $filename;
             }
-             $user->save();
+            $user->save();
 
-              $assign_student = Student::where('id',$request->id)->where('student_id',$id)->first();
+            $assign_student = Student::where('id', $request->id)->where('student_id', $id)->first();
 
-              $assign_student->year_id = $request->year_id;
-              $assign_student->class_id = $request->class_id;
-              $assign_student->group_id = $request->group_id;
-              $assign_student->shift_id = $request->shift_id;
-              $assign_student->save();
+            $assign_student->year_id = $request->year_id;
+            $assign_student->class_id = $request->class_id;
+            $assign_student->group_id = $request->group_id;
+            $assign_student->shift_id = $request->shift_id;
+            $assign_student->save();
 
-              $discount_student = DiscountStudent::where('assign_student_id',$request->id)->first();
+            $discount_student = DiscountStudent::where('assign_student_id', $request->id)->first();
 
-              $discount_student->discount = $request->discount;
-              $discount_student->save();
+            $discount_student->discount = $request->discount;
+            $discount_student->save();
 
-            });
+        });
 
+        $notification = array(
+            'message' => 'Student Registration Updated Successfully',
+            'alert-type' => 'success',
+        );
 
-            $notification = array(
-                'message' => 'Student Registration Updated Successfully',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->route('student.admission.view')->with($notification);
+        return redirect()->route('student.admission.view')->with($notification);
     }
 
     /**
