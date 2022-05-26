@@ -25,15 +25,15 @@
                                                     <div class="form-group">
                                                         <h5>User Role <span class="text-danger">*</span></h5>
                                                         <div class="controls">
-                                                            <select name="usertype" required="" class="form-control">
+                                                            <select name="role" required="" class="form-control">
                                                                 <option value="" selected="" disabled="">Select Role
                                                                 </option>
                                                                 <option value="Admin"
-                                                                    {{ $editData->usertype == 'Admin' ? 'selected' : '' }}>
+                                                                    {{ $editData->role == 'admin' ? 'selected' : '' }}>
                                                                     Admin</option>
-                                                                <option value="User"
-                                                                    {{ $editData->usertype == 'User' ? 'selected' : '' }}>
-                                                                    User</option>
+                                                                <option value="Operator"
+                                                                    {{ $editData->role == 'operator' ? 'selected' : '' }}>
+                                                                    Operator</option>
 
                                                             </select>
                                                         </div>

@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     //
     public function UserView(){
-        $data['users'] = User::all();
+        $data['users'] = User::where('usertype','Admin')->get();
         return view('backend.user.index', $data);
     }
 
@@ -19,20 +19,22 @@ class UserController extends Controller
     }
 
     public function UserStore(Request $request){
-        $validateData = $request->validate([
-            'email' => 'required|unique:users',
-            'name' => 'required',
-        ]);
+        $validatedData = $request->validate([
+    		'email' => 'required|unique:users',
+    		'name' => 'required',
+    	]);
 
-        $data = new User();
+    	$data = new User();
+        $code = rand(0000,9999);
+    	$data->usertype = 'Admin';
+        $data->role = $request->role;
+    	$data->name = $request->name;
+    	$data->email = $request->email;
+    	$data->password = bcrypt($code);
+        $data->code = $code;
+    	$data->save();
 
-        $data->usertype = $request->usertype;
-        $data->name = $request->name;
-        $data->email = $request->email;
-        $data->password = bcrypt($request->password);
-        $data->save();
-
-        $notification = array(
+    	$notification = array(
     		'message' => 'User Inserted Successfully',
     		'alert-type' => 'success'
     	);
@@ -53,7 +55,7 @@ class UserController extends Controller
     	$data = User::find($id);
     	$data->name = $request->name;
     	$data->email = $request->email;
-        $data->usertype = $request->usertype;
+        $data->role = $request->role;
     	$data->save();
 
     	$notification = array(
@@ -61,7 +63,7 @@ class UserController extends Controller
     		'alert-type' => 'info'
     	);
 
-    	return redirect()->route('users.view')->with($notification);
+    	return redirect()->route('user.view')->with($notification);
 
     }
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\Setup\StudentShiftController;
 use App\Http\Controllers\Backend\Setup\StudentYearController;
 use App\Http\Controllers\Backend\Setup\AssignSubjectController;
 use App\Http\Controllers\Backend\Setup\DesignationController;
+use App\Http\Controllers\Backend\Student\RegController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -144,11 +145,23 @@ Route::prefix('setups')->group(function(){
     Route::post('assign/subject/update/{id}', [AssignSubjectController::class, 'update'])->name('assign.subject.update');
     Route::get('assign/subject/delete/{id}', [AssignSubjectController::class, 'destroy'])->name('assign.subject.delete');
 
+    // Designation Management All Routes
     Route::get('designation/view', [DesignationController::class, 'index'])->name('designation.view');
     Route::get('designation/create', [DesignationController::class, 'create'])->name('designation.create');
     Route::post('designation/store', [DesignationController::class, 'store'])->name('designation.store');
     Route::get('designation/edit/{id}', [DesignationController::class, 'edit'])->name('designation.edit');
     Route::post('designation/update/{id}', [DesignationController::class, 'update'])->name('designation.update');
     Route::get('designation/delete/{id}', [DesignationController::class, 'destroy'])->name('designation.delete');
+
+});
+
+
+// Student Management All Routes
+Route::prefix('students')->group(function(){
+    Route::get('/admission/view', [RegController::class, 'index'])->name('student.admission.view');
+    Route::get('/admission/create', [RegController::class, 'create'])->name('student.admission.create');
+    Route::post('/admission/store', [RegController::class, 'store'])->name('student.admission.store');
+    Route::get('/admission/edit/{id}', [RegController::class, 'edit'])->name('student.admission.edit');
+    Route::post('/admission/update/{id}', [RegController::class, 'update'])->name('student.admission.update');
 
 });
